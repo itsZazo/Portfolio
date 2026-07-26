@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
-        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Syne:wght@400;500;600;700;800&display=swap"
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Syne:wght@400;500;600;700;800&family=Play:wght@400;700&display=swap"
         rel="stylesheet">
 
     <style>
@@ -253,6 +253,7 @@
 
             .mobile-menu-btn {
                 display: block;
+                margin-left: auto;
             }
         }
 
@@ -357,6 +358,11 @@
             .hero-face-img {
                 opacity: 0.35;
             }
+
+            .hero-face-wrap {
+                width: min(360px, 78vw);
+                height: min(420px, 46vh);
+            }
         }
 
         .hero-content {
@@ -367,16 +373,16 @@
         }
 
         .hero h1 {
-            font-family: 'Syne', sans-serif;
+            font-family: 'Play', 'Syne', sans-serif;
             font-size: clamp(2.8rem, 8vw, 5rem);
-            font-weight: 800;
+            font-weight: 700;
             margin-bottom: 1rem;
-            background: linear-gradient(135deg, #00d4ff 0%, #ffffff 50%, #9966ff 100%);
+            background: linear-gradient(135deg, #00d4ff 0%, #7ef0ff 35%, #ffffff 55%, #00d4ff 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             animation: glow 2s ease-in-out infinite alternate;
-            letter-spacing: -0.03em;
+            letter-spacing: 0.02em;
             line-height: 1.1;
         }
 
@@ -746,8 +752,16 @@
         }
 
         .project-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
+            width: 56px;
+            height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 1.25rem;
+            border-radius: 14px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.12), rgba(153, 102, 255, 0.12));
+            border: 1px solid rgba(0, 212, 255, 0.25);
         }
 
         .project-title {
@@ -821,22 +835,6 @@
         .tech-tag:hover {
             background: rgba(0, 212, 255, 0.2);
             transform: scale(1.05);
-        }
-
-        .image-placeholder {
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(153, 102, 255, 0.1));
-            border: 2px dashed rgba(0, 212, 255, 0.3);
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-muted);
-            margin-bottom: 1.5rem;
-            font-size: 3rem;
-            position: relative;
-            z-index: 2;
         }
 
         /* ==================== FEATURED SHOWCASE ==================== */
@@ -1286,6 +1284,107 @@
         }
 
         /* ==================== RESPONSIVE ==================== */
+
+        /* "View All Projects" trigger — hidden on desktop, shown on mobile */
+        .view-projects-btn {
+            display: none;
+        }
+
+        .mobile-more-close {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .scroll-progress {
+                display: none;
+            }
+
+            /* Turn the main page into horizontal, swipeable full-screen slides */
+            .swipe-track {
+                display: flex;
+                flex-wrap: nowrap;
+                width: 100%;
+                height: 100vh;
+                height: 100dvh;
+                overflow-x: auto;
+                overflow-y: hidden;
+                scroll-snap-type: x mandatory;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+
+            .swipe-track::-webkit-scrollbar {
+                display: none;
+            }
+
+            .swipe-track>section {
+                flex: 0 0 100vw;
+                width: 100vw;
+                height: 100vh;
+                height: 100dvh;
+                scroll-snap-align: start;
+                scroll-snap-stop: always;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+                box-sizing: border-box;
+            }
+
+            .swipe-track>section:not(.hero) {
+                padding-top: 4.5rem;
+            }
+
+            /* Projects & Skills are pulled out of the swipe flow by default */
+            .mobile-more-overlay {
+                display: none;
+            }
+
+            .mobile-more-overlay.open {
+                display: block;
+                position: fixed;
+                inset: 0;
+                z-index: 3000;
+                background: var(--darker);
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+                padding-top: 4.5rem;
+            }
+
+            .mobile-more-overlay.open section {
+                height: auto;
+                overflow: visible;
+            }
+
+            .view-projects-btn {
+                display: inline-flex;
+                align-items: center;
+                justify-content: center;
+                margin: 2rem auto 1rem;
+                padding: 0.9rem 1.8rem;
+                background: rgba(0, 212, 255, 0.1);
+                border: 1px solid rgba(0, 212, 255, 0.4);
+                border-radius: 30px;
+                color: var(--primary);
+                font-weight: 600;
+                font-size: 0.95rem;
+                cursor: pointer;
+            }
+
+            .mobile-more-close {
+                display: block;
+                position: fixed;
+                top: 1rem;
+                right: 1rem;
+                z-index: 3001;
+                background: rgba(10, 14, 22, 0.9);
+                border: 1px solid rgba(0, 212, 255, 0.4);
+                border-radius: 20px;
+                color: var(--text-primary);
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
+                cursor: pointer;
+            }
+        }
+
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2.5rem;
@@ -1314,6 +1413,16 @@
                 gap: 2rem;
             }
 
+            .showcase-item .showcase-content,
+            .showcase-item.reverse .showcase-content {
+                order: 1;
+            }
+
+            .showcase-item .showcase-gallery,
+            .showcase-item.reverse .showcase-gallery {
+                order: 2;
+            }
+
             .carousel-nav {
                 width: 36px;
                 height: 36px;
@@ -1328,7 +1437,6 @@
     <!-- ==================== NAVIGATION ==================== -->
     <nav>
         <div class="nav-container">
-            <div class="logo">AA</div>
             <ul class="nav-links">
                 <li><a href="#home">Home</a></li>
                 <li><a href="#about">About</a></li>
@@ -1354,6 +1462,7 @@
         <a href="#contact" onclick="toggleMobileNav()">Contact</a>
     </div>
 
+    <div class="swipe-track">
     <!-- ==================== HERO SECTION ==================== -->
     <section class="hero" id="home">
         <div class="hero-face-wrap">
@@ -1482,7 +1591,7 @@
                         <div class="experience-title">AI Engineer</div>
                         <div class="experience-company">Xabta, United States (Remote)</div>
                     </div>
-                    <div class="experience-date">08/2024 – 06/2025</div>
+                    <div class="experience-date">06/2024 – 06/2025</div>
                 </div>
                 <div class="experience-description">
                     Developed 50+ machine learning and computer vision solutions using PyTorch and Scikit-learn.
@@ -1498,6 +1607,40 @@
                     <div class="metric">
                         <div class="metric-value">5+</div>
                         <div class="metric-label">Architectures</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- University of Hazara (Doctorate of IT) -->
+            <div class="experience-item">
+                <div class="experience-header">
+                    <div>
+                        <div class="experience-title">Data Analyst & ML Engineer</div>
+                        <div class="experience-company">Doctorate of IT, University of Hazara</div>
+                    </div>
+                    <div class="experience-date">12/2023 – 08/2024</div>
+                </div>
+                <div class="experience-description">
+                    Conducted exploratory data analysis (EDA) and statistical analysis on research and institutional
+                    datasets, uncovering meaningful trends and actionable insights. Cleaned, validated, and
+                    engineered features across 8 datasets, then designed, trained, and evaluated ML and computer
+                    vision models for predictive analytics, classification, and image-based analysis using Python and
+                    Scikit-learn. Deep-dived into one dataset to identify server traffic increase factors and their
+                    underlying behavior, and collaborated with faculty and research teams to turn findings into
+                    practical research outcomes, reports, and reproducible documentation.
+                </div>
+                <div class="metrics-grid">
+                    <div class="metric">
+                        <div class="metric-value">8</div>
+                        <div class="metric-label">Datasets Maintained</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">3</div>
+                        <div class="metric-label">Vision Datasets</div>
+                    </div>
+                    <div class="metric">
+                        <div class="metric-value">100%</div>
+                        <div class="metric-label">Annotated & Labeled</div>
                     </div>
                 </div>
             </div>
@@ -1727,16 +1870,22 @@
                 </div>
             </div>
         </div>
+
+        <button class="view-projects-btn" onclick="openMobileMore()">View All Projects &amp; Skills →</button>
     </section>
+
+    <!-- ==================== MOBILE PROJECTS/SKILLS OVERLAY WRAPPER ==================== -->
+    <div class="mobile-more-overlay" id="mobileMoreOverlay">
+        <button class="mobile-more-close" onclick="closeMobileMore()" aria-label="Close">× Close</button>
 
     <!-- ==================== PROJECTS SECTION ==================== -->
     <section class="projects" id="projects">
-        <h2 class="section-title">All Projects</h2>
+        <h2 class="section-title">Other Projects</h2>
         <p class="section-subtitle">Additional production systems — the 5 flagship projects with screenshots are
             featured above.</p>
 
         <div class="projects-tabs">
-            <button class="tab-button active" onclick="filterProjects('all', this)">All Projects (13+)</button>
+            <button class="tab-button active" onclick="filterProjects('all', this)">All (8)</button>
             <button class="tab-button" onclick="filterProjects('products', this)">More Core Products (3)</button>
             <button class="tab-button" onclick="filterProjects('ml', this)">Fine-Tuning & Deployment (3)</button>
             <button class="tab-button" onclick="filterProjects('legacy', this)">Legacy Projects (2)</button>
@@ -1745,7 +1894,6 @@
         <div class="projects-grid" id="projects-container">
             <!-- REMAINING CORE PRODUCTS -->
             <div class="project-card" data-category="products">
-                <div class="image-placeholder">👥</div>
                 <div class="project-icon">🔍</div>
                 <div class="project-title">Erly AI Agent</div>
                 <div class="project-description">
@@ -1772,7 +1920,6 @@
 
             <!-- 7. Erly Employee Management -->
             <div class="project-card" data-category="products">
-                <div class="image-placeholder">📋</div>
                 <div class="project-icon">⚙️</div>
                 <div class="project-title">Erly Employee Management</div>
                 <div class="project-description">
@@ -1797,31 +1944,30 @@
                 </div>
             </div>
 
-            <!-- 8. Erly VC & Real Estate Agents -->
+            <!-- 8. Vault CRM -->
             <div class="project-card" data-category="products">
-                <div class="image-placeholder">🔍</div>
-                <div class="project-icon">🏘️</div>
-                <div class="project-title">VC & Real Estate Agents</div>
+                <div class="project-icon">🏢</div>
+                <div class="project-title">Vault CRM</div>
                 <div class="project-description">
-                    Fund discovery (4 hrs → 20 min) & deep research (6–8 hrs → 45–60 min) with automated PPTX deck
-                    generation,
-                    tracking 100–300 personnel on schedule.
+                    Enterprise multi-agent VC fundraising platform with 10+ agents, async Celery/SQS LP discovery,
+                    outreach draft generation ~90% faster.
                 </div>
                 <div class="project-metrics">
                     <div class="project-metric">
-                        <div class="project-metric-value">95%</div>
-                        <div class="project-metric-label">Faster</div>
+                        <div class="project-metric-value">10+</div>
+                        <div class="project-metric-label">AI Agents</div>
                     </div>
                     <div class="project-metric">
-                        <div class="project-metric-value">300</div>
-                        <div class="project-metric-label">Tracked</div>
+                        <div class="project-metric-value">90%</div>
+                        <div class="project-metric-label">Faster Drafts</div>
                     </div>
                 </div>
                 <div class="tech-tags">
-                    <span class="tech-tag">Anchor Browser</span>
-                    <span class="tech-tag">Gemini</span>
+                    <span class="tech-tag">MongoDB</span>
+                    <span class="tech-tag">RAG</span>
                     <span class="tech-tag">SerpAPI</span>
-                    <span class="tech-tag">python-pptx</span>
+                    <span class="tech-tag">Celery</span>
+                    <span class="tech-tag">SQS</span>
                 </div>
             </div>
 
@@ -1829,7 +1975,6 @@
 
             <!-- 1. LLM Fine-Tuning & vLLM -->
             <div class="project-card" data-category="ml">
-                <div class="image-placeholder">🧠</div>
                 <div class="project-icon">⚡</div>
                 <div class="project-title">LLM Fine-Tuning & vLLM</div>
                 <div class="project-description">
@@ -1857,7 +2002,6 @@
 
             <!-- 2. Stable Diffusion LoRA -->
             <div class="project-card" data-category="ml">
-                <div class="image-placeholder">🎨</div>
                 <div class="project-icon">✨</div>
                 <div class="project-title">Stable Diffusion LoRA</div>
                 <div class="project-description">
@@ -1884,7 +2028,6 @@
 
             <!-- 3. vLLM Inference Optimization -->
             <div class="project-card" data-category="ml">
-                <div class="image-placeholder">⚙️</div>
                 <div class="project-icon">🚀</div>
                 <div class="project-title">vLLM Inference Optimization</div>
                 <div class="project-description">
@@ -1913,7 +2056,6 @@
 
             <!-- 1. PDF RAG Chatbot -->
             <div class="project-card" data-category="legacy">
-                <div class="image-placeholder">💬</div>
                 <div class="project-icon">📄</div>
                 <div class="project-title">PDF RAG Chatbot</div>
                 <div class="project-description">
@@ -1939,7 +2081,6 @@
 
             <!-- 2. Animation Frame Pipeline -->
             <div class="project-card" data-category="legacy">
-                <div class="image-placeholder">🎬</div>
                 <div class="project-icon">🎨</div>
                 <div class="project-title">Animation Frame Pipeline</div>
                 <div class="project-description">
@@ -2068,6 +2209,8 @@
             </div>
         </div>
     </section>
+    </div>
+    <!-- end mobile-more-overlay -->
 
     <!-- ==================== CONTACT SECTION ==================== -->
     <section class="contact" id="contact">
@@ -2094,6 +2237,8 @@
             </div>
         </div>
     </section>
+    </div>
+    <!-- end swipe-track -->
 
     <!-- ==================== FOOTER ==================== -->
     <footer>
@@ -2226,12 +2371,39 @@
         }
 
         // Smooth scroll for navigation links
+        function isMobileLayout() {
+            return window.matchMedia('(max-width: 768px)').matches;
+        }
+
+        function openMobileMore() {
+            const el = document.getElementById('mobileMoreOverlay');
+            el.classList.add('open');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMobileMore() {
+            const el = document.getElementById('mobileMoreOverlay');
+            el.classList.remove('open');
+            document.body.style.overflow = '';
+        }
+
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
+                const href = this.getAttribute('href');
+
+                if (isMobileLayout() && (href === '#projects' || href === '#skills')) {
+                    openMobileMore();
+                    return;
+                }
+
+                if (isMobileLayout()) {
+                    closeMobileMore();
+                }
+
+                const target = document.querySelector(href);
                 if (target) {
-                    target.scrollIntoView({ behavior: 'smooth' });
+                    target.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'start' });
                 }
             });
         });
