@@ -1312,6 +1312,10 @@
             display: none;
         }
 
+        .mobile-top-nav {
+            display: none;
+        }
+
         @media (max-width: 768px) {
 
             nav,
@@ -1364,6 +1368,10 @@
             #home,
             #contact {
                 scroll-snap-type: none;
+            }
+
+            .hero {
+                margin-top: 0 !important;
             }
 
             #about {
@@ -1451,6 +1459,10 @@
                 scroll-margin-top: 2rem;
             }
 
+            footer {
+                display: none !important;
+            }
+
             .mobile-swipe-indicator {
                 display: flex;
                 position: fixed;
@@ -1474,17 +1486,57 @@
             }
 
             @keyframes fadeBounce {
-
                 0%,
                 100% {
                     transform: translate(-50%, 0);
                     opacity: 0.5;
                 }
-
                 50% {
                     transform: translate(-50%, 10px);
                     opacity: 1;
                 }
+            }
+
+            .mobile-swipe-indicator.hidden {
+                display: none !important;
+            }
+
+            .mobile-top-nav {
+                display: flex;
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                justify-content: space-between;
+                align-items: flex-start;
+                background: transparent;
+                border-top: 1px solid rgba(255, 255, 255, 0.1);
+                z-index: 2000;
+                padding: 4px 15px 0 15px;
+                transition: transform 0.3s ease, opacity 0.3s ease;
+            }
+
+            .mobile-top-nav.hidden {
+                transform: translateY(-100%);
+                opacity: 0;
+                pointer-events: none;
+            }
+
+            .mobile-nav-item {
+                font-family: 'Syne', sans-serif;
+                font-size: 0.65rem;
+                color: var(--text-secondary);
+                text-decoration: none;
+                font-weight: 600;
+                text-transform: capitalize;
+                transition: color 0.3s ease;
+                line-height: 1;
+                margin: 0;
+                padding: 0;
+            }
+
+            .mobile-nav-item.active {
+                color: var(--primary);
             }
 
             /* Projects & Skills are pulled out of the swipe flow by default */
@@ -1618,6 +1670,14 @@
         <a href="#projects" onclick="toggleMobileNav()">Projects</a>
         <a href="#skills" onclick="toggleMobileNav()">Skills</a>
         <a href="#contact" onclick="toggleMobileNav()">Contact</a>
+    </div>
+
+    <div class="mobile-top-nav" id="mobileTopNav">
+        <a href="#home" class="mobile-nav-item active">Home</a>
+        <a href="#about" class="mobile-nav-item">About</a>
+        <a href="#experience" class="mobile-nav-item">Experience</a>
+        <a href="#featured" class="mobile-nav-item">Work</a>
+        <a href="#contact" class="mobile-nav-item">Contact</a>
     </div>
 
     <div class="swipe-track">
@@ -2583,6 +2643,74 @@
                 }
             });
         });
+
+        // ==================== MOBILE TOP NAV BEHAVIOR ====================
+        if (isMobileLayout()) {
+            const sections = document.querySelectorAll('.swipe-track > section');
+            const topNav = document.getElementById('mobileTopNav');
+            const navItems = document.querySelectorAll('.mobile-nav-item');
+            const swipeIndicator = document.querySelector('.mobile-swipe-indicator');
+
+            function updateSwipeIndicator(section) {
+                if (!swipeIndicator) return;
+                // If section cannot be scrolled or is scrolled to bottom, hide indicator
+                if (section.scrollHeight <= section.clientHeight + 20 || 
+                    section.scrollTop + section.clientHeight >= section.scrollHeight - 20) {
+                    swipeIndicator.classList.add('hidden');
+                } else {
+                    swipeIndicator.classList.remove('hidden');
+                }
+            }
+
+            // 1. Hide/show top nav based on vertical scroll of active section
+            sections.forEach(sec => {
+                sec.addEventListener('scroll', (e) => {
+                    if (e.target.scrollTop > 50) {
+                        topNav.classList.add('hidden');
+                    } else {
+                        topNav.classList.remove('hidden');
+                    }
+                    updateSwipeIndicator(e.target);
+                }, { passive: true });
+            });
+
+            // 2. Highlight active page on horizontal swipe
+            const swipeTrack = document.querySelector('.swipe-track');
+            const sectionIds = Array.from(sections).map(sec => sec.id);
+
+            swipeTrack.addEventListener('scroll', () => {
+                const index = Math.round(swipeTrack.scrollLeft / window.innerWidth);
+                const currentId = sectionIds[index];
+                
+                if (currentId) {
+                    navItems.forEach(item => {
+                        if (item.getAttribute('href') === '#' + currentId) {
+                            item.classList.add('active');
+                        } else {
+                            item.classList.remove('active');
+                        }
+                    });
+                    
+                    // Reset visibility if we enter a new section that is at top
+                    const currentSection = document.getElementById(currentId);
+                    if (currentSection) {
+                        if (currentSection.scrollTop <= 50) {
+                            topNav.classList.remove('hidden');
+                        } else {
+                            topNav.classList.add('hidden');
+                        }
+                        updateSwipeIndicator(currentSection);
+                    }
+                }
+            }, { passive: true });
+
+            // Initial call for the indicator
+            setTimeout(() => {
+                const index = Math.round(swipeTrack.scrollLeft / window.innerWidth);
+                const currentSection = document.getElementById(sectionIds[index] || sectionIds[0]);
+                if (currentSection) updateSwipeIndicator(currentSection);
+            }, 100);
+        }
 
         // Scroll animation for elements
         const observerOptions = {
