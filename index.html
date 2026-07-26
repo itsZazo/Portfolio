@@ -1312,11 +1312,6 @@
             display: none;
         }
 
-        /* ==================== MOBILE THIN TOP PAGE BAR ==================== */
-        .mobile-page-bar {
-            display: none;
-        }
-
         @media (max-width: 768px) {
 
             nav,
@@ -1325,49 +1320,6 @@
             .mobile-nav-close {
                 display: none !important;
             }
-
-            .mobile-page-bar {
-                display: flex;
-                position: fixed;
-                top: 0;
-                left: 0;
-                right: 0;
-                width: 100%;
-                z-index: 1000;
-                background: transparent;
-                border-bottom: 1px solid rgba(0, 212, 255, 0.15);
-                padding: 0;
-                margin: 0;
-                list-style: none;
-                transform: translateY(0);
-                opacity: 1;
-                transition: transform 0.25s ease, opacity 0.25s ease;
-                pointer-events: none;
-            }
-
-            .mobile-page-bar.hidden {
-                transform: translateY(-100%);
-                opacity: 0;
-            }
-
-            .mobile-page-bar .page-tab {
-                flex: 1 1 0;
-                text-align: center;
-                font-size: 0.62rem;
-                letter-spacing: 0.02em;
-                font-weight: 500;
-                color: var(--text-muted);
-                padding: 0.5rem 0.25rem;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                transition: color 0.25s ease;
-            }
-
-            .mobile-page-bar .page-tab.active {
-                color: var(--primary);
-            }
-        }
 
             .scroll-progress {
                 display: none;
@@ -1666,15 +1618,6 @@
         <a href="#projects" onclick="toggleMobileNav()">Projects</a>
         <a href="#skills" onclick="toggleMobileNav()">Skills</a>
         <a href="#contact" onclick="toggleMobileNav()">Contact</a>
-    </div>
-
-    <!-- ==================== MOBILE THIN TOP PAGE BAR ==================== -->
-    <div class="mobile-page-bar" id="mobilePageBar">
-        <div class="page-tab active" data-target="#home">Home</div>
-        <div class="page-tab" data-target="#about">About</div>
-        <div class="page-tab" data-target="#experience">Experience</div>
-        <div class="page-tab" data-target="#featured">Work</div>
-        <div class="page-tab" data-target="#contact">Contact</div>
     </div>
 
     <div class="swipe-track">
@@ -2667,52 +2610,6 @@
         });
 
         initCarousels();
-
-        // ==================== MOBILE THIN TOP PAGE BAR ====================
-        (function () {
-            const bar = document.getElementById('mobilePageBar');
-            const track = document.querySelector('.swipe-track');
-            if (!bar || !track) return;
-
-            const tabs = Array.from(bar.querySelectorAll('.page-tab'));
-            const pageIds = tabs.map(t => t.getAttribute('data-target'));
-
-            function setActiveByScrollLeft() {
-                const w = track.clientWidth || window.innerWidth;
-                const idx = Math.round(track.scrollLeft / w);
-                tabs.forEach((t, i) => t.classList.toggle('active', i === idx));
-            }
-
-            track.addEventListener('scroll', setActiveByScrollLeft, { passive: true });
-            window.addEventListener('resize', setActiveByScrollLeft);
-            setActiveByScrollLeft();
-
-            // Tapping a tab jumps to that page
-            tabs.forEach(tab => {
-                tab.style.pointerEvents = 'auto';
-                tab.addEventListener('click', () => {
-                    const target = document.querySelector(tab.getAttribute('data-target'));
-                    if (target) target.scrollIntoView({ behavior: 'smooth', inline: 'start', block: 'start' });
-                });
-            });
-
-            // Show bar only when the current page is scrolled to its top;
-            // hide it as soon as the user scrolls down within a page.
-            function updateVisibility(scrollTop) {
-                bar.classList.toggle('hidden', scrollTop > 4);
-            }
-
-            document.addEventListener('scroll', function (e) {
-                const t = e.target;
-                if (t === document || t === window) return;
-                if (t.nodeType === 1 && t.classList && t.classList.contains('swipe-track')) return;
-                if (t.nodeType === 1 && t.tagName === 'SECTION') {
-                    updateVisibility(t.scrollTop);
-                }
-            }, true);
-
-            window.addEventListener('scroll', () => updateVisibility(window.scrollY), { passive: true });
-        })();
     </script>
 </body>
 
