@@ -37,6 +37,11 @@
 
         html {
             scroll-behavior: smooth;
+            scroll-padding-top: 90px;
+        }
+
+        section, [id] {
+            scroll-margin-top: 90px;
         }
 
         body {
@@ -356,12 +361,12 @@
 
         @media (max-width: 768px) {
             .hero-face-img {
-                opacity: 0.35;
+                opacity: 0.5;
             }
 
             .hero-face-wrap {
-                width: min(360px, 78vw);
-                height: min(420px, 46vh);
+                width: min(540px, 92vw);
+                height: min(630px, 68vh);
             }
         }
 
@@ -1325,12 +1330,36 @@
                 scroll-snap-align: start;
                 scroll-snap-stop: always;
                 overflow-y: auto;
+                scroll-snap-type: y mandatory;
                 -webkit-overflow-scrolling: touch;
                 box-sizing: border-box;
+                padding-bottom: 4rem;
             }
 
             .swipe-track>section:not(.hero) {
-                padding-top: 4.5rem;
+                padding-top: 5.5rem;
+            }
+
+            /* Snap-to-card behavior on vertical scroll/swipe for items */
+            .experience-item,
+            .showcase-item,
+            .project-card,
+            .skill-category {
+                scroll-snap-align: start;
+                scroll-snap-stop: always;
+                scroll-margin-top: 5.5rem;
+                min-height: calc(100dvh - 5.5rem);
+                margin-bottom: 0;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                padding-bottom: 2rem;
+            }
+
+            .section-title {
+                scroll-snap-align: start;
+                scroll-snap-stop: always;
+                scroll-margin-top: 5.5rem;
             }
 
             /* Projects & Skills are pulled out of the swipe flow by default */
@@ -1345,8 +1374,9 @@
                 z-index: 3000;
                 background: var(--darker);
                 overflow-y: auto;
+                scroll-snap-type: y mandatory;
                 -webkit-overflow-scrolling: touch;
-                padding-top: 4.5rem;
+                padding-top: 5.5rem;
             }
 
             .mobile-more-overlay.open section {
@@ -1868,10 +1898,9 @@
                     <span class="tech-tag">ChromaDB</span>
                     <span class="tech-tag">Stripe</span>
                 </div>
+                <button class="view-projects-btn" onclick="openMobileMore()" style="margin-top: 2rem; align-self: flex-start;">View All Projects &amp; Skills →</button>
             </div>
         </div>
-
-        <button class="view-projects-btn" onclick="openMobileMore()">View All Projects &amp; Skills →</button>
     </section>
 
     <!-- ==================== MOBILE PROJECTS/SKILLS OVERLAY WRAPPER ==================== -->
