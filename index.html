@@ -1486,11 +1486,13 @@
             }
 
             @keyframes fadeBounce {
+
                 0%,
                 100% {
                     transform: translate(-50%, 0);
                     opacity: 0.5;
                 }
+
                 50% {
                     transform: translate(-50%, 10px);
                     opacity: 1;
@@ -1726,12 +1728,14 @@
             <div class="about-content">
                 <div class="about-text-group">
                     <div class="about-text">
-                        <strong>AI Engineer with 3+ years of professional experience</strong> designing, fine-tuning, and
+                        <strong>AI Engineer with 3+ years of professional experience</strong> designing, fine-tuning,
+                        and
                         deploying large-scale AI systems in production.
                         I specialize in <strong>Agentic AI, Retrieval-Augmented Generation (RAG), and LLM
                             Fine-Tuning</strong>,
                         with hands-on expertise
-                        in building multi-agent workflows, fine-tuning open-source models, and shipping production-ready AI
+                        in building multi-agent workflows, fine-tuning open-source models, and shipping production-ready
+                        AI
                         microservices.
                     </div>
 
@@ -1739,7 +1743,8 @@
                         <strong>Track Record:</strong> At Erly Studios (06/2025 – 07/2026), I delivered <strong>13+
                             production
                             AI products</strong> serving
-                        <strong>500–1,500 users</strong> across healthcare, venture capital, compliance, travel, research,
+                        <strong>500–1,500 users</strong> across healthcare, venture capital, compliance, travel,
+                        research,
                         and
                         workforce automation —
                         architecting <strong>30+ autonomous LangGraph agents</strong> and <strong>11 FastAPI
@@ -1750,7 +1755,8 @@
 
                 <div class="about-text-group">
                     <div class="about-text">
-                        <strong>ML Engineering Expertise:</strong> Fine-tuned and deployed <strong>2 LLMs</strong> (Llama 2
+                        <strong>ML Engineering Expertise:</strong> Fine-tuned and deployed <strong>2 LLMs</strong>
+                        (Llama 2
                         7B,
                         TinyLlama 1.1B) and
                         <strong>1 Stable Diffusion model</strong>. Deployed TinyLlama on vLLM for <strong>~90% cost
@@ -1783,7 +1789,8 @@
                         <div class="experience-date">06/2025 – 07/2026</div>
                     </div>
                     <div class="experience-description">
-                        Architected and deployed 13+ production-grade AI products, 30+ LangGraph agents, and 11 FastAPI
+                        Architected and deployed 13+ production-grade AI products, 30+ LangGraph agents, and 110+
+                        FastAPI
                         microservices.
                         Owned end-to-end development from architecture to deployment for compliance, CRM, RAG SaaS,
                         workforce ops, travel,
@@ -2652,7 +2659,7 @@
             function updateSwipeIndicator(section) {
                 if (!swipeIndicator) return;
                 // If section cannot be scrolled or is scrolled to bottom, hide indicator
-                if (section.scrollHeight <= section.clientHeight + 20 || 
+                if (section.scrollHeight <= section.clientHeight + 20 ||
                     section.scrollTop + section.clientHeight >= section.scrollHeight - 20) {
                     swipeIndicator.classList.add('hidden');
                 } else {
@@ -2679,7 +2686,7 @@
             swipeTrack.addEventListener('scroll', () => {
                 const index = Math.round(swipeTrack.scrollLeft / window.innerWidth);
                 const currentId = sectionIds[index];
-                
+
                 if (currentId) {
                     navItems.forEach(item => {
                         if (item.getAttribute('href') === '#' + currentId) {
@@ -2688,7 +2695,7 @@
                             item.classList.remove('active');
                         }
                     });
-                    
+
                     // Reset visibility if we enter a new section that is at top
                     const currentSection = document.getElementById(currentId);
                     if (currentSection) {
